@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   end
 
   root to: 'tasks#index'
-  resources :tasks
+  resources :tasks do
+    post :confirm, action: :confirm_new, on: :new
+  end
 end

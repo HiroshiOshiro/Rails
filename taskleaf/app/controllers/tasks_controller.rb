@@ -29,12 +29,25 @@ class TasksController < ApplicationController
   def create
     # ログインユーザに日もづいたtaskの登録
     @task = current_user.tasks.new(task_params)
+
+    # 確認画面で戻るボタン押された場合
+    if params[:back].present?
+      render :new
+      return
+    end
+
     if @task.save
       redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。"
     else
       render :new
     end
   end
+
+  def confirm_new
+    @task = current_user.tasks.new(task_params)
+    render :new unless @task.valid?
+
+    end
 
   private
   def task_params
