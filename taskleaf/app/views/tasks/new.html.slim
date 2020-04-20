@@ -8,7 +8,10 @@ h1 タスクの新規登録
     - @task.errors.full_messages.each do |message|
       li= message
 
-= form_with model:@task, local: true, url: confirm_new_task_path do |f|
+= render partial: 'form', locals: { task: @task }
+
+/ ↓確認画面表示する場合のコード（画像添付機能追加時に確認画面があると面倒なためコメントアウト）
+/= form_with model:@task, local: true, url: confirm_new_task_path do |f|
    .form-group
      = f.label :name, 'タスク名'
      = f.text_field :name, class: 'form-control', id: 'task_name'
@@ -16,3 +19,4 @@ h1 タスクの新規登録
      = f.label :description, '内容'
      = f.text_area :description, rows: 5, class: 'form-control', id: 'task_description'
    = f.submit '確認', class: 'btn btn-primary'
+/ ↑確認画面表示する場合のコード（画像添付機能追加時に確認画面があると面倒なためコメントアウト）
