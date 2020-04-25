@@ -2,9 +2,16 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-  # binding.pry
     @q = current_user.tasks.ransack(params[:q])
     @tasks = @q.result(distinct: true)
+
+    respond_to do |format|
+      # /tasks の時
+      format.html
+
+      # /tasks.csv の時
+      format.csv { send_data @tasks.generate_csv, filename: "tasks-#{Time.zone.now.strftime('%Y%m%S')}.csv" }
+    end
   end
 
   def show
@@ -48,8 +55,12 @@ class TasksController < ApplicationController
   def confirm_new
     @task = current_user.tasks.new(task_params)
     render :new unless @task.valid?
+  end
 
-    end
+  def import
+    current_user.tasks.import_csv(params[:file])
+    redirect_to tasks_url, notice: "タスクを追加しました"
+  end
 
   private
   def task_params
