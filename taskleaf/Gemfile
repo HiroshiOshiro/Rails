@@ -76,4 +76,8 @@ gem 'pry-byebug'
 # for url link
 gem 'rails_autolink'
 
+# 検索
 gem 'ransack'
+
+# ページネーション
+gem 'kaminari'
