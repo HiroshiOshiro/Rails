@@ -81,3 +81,6 @@ gem 'ransack'
 
 # ページネーション
 gem 'kaminari'
+
+# Job スケジューリング
+gem 'sidekiq'
